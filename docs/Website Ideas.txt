@@ -1,0 +1,12 @@
+Section Ideas:
+o Minecraft
+o Cyber Security Blog
+o Learn Reverse Engineering Section
+o Plex Access Request
+o NextCloud Storage Access Request
+o Showcase
+
+Footer Ideas:
+o Gitlab Link
+o YouTube Link
+o LinkedIn Link

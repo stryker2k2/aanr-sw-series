@@ -1,0 +1,24 @@
+ReactJS Website Notes:
+
+o git init
+o cmd:> npx create-react-app react-website-yt-1
+o cd react-website-yt-1
+o npm start
+o code .
+
+
+
+Snippits:
+o rfce (sets up new JS file with constructor)
+
+
+
+Serve Website Options:
+o Debug
+    > npm start
+o Production
+    > npm run build
+    	o serve -b build (to build locally)
+	> sudo rm -r /var/www/html/*
+    > sudo cp -r build/* /var/www/html/
+	> sudo service apache2 restart

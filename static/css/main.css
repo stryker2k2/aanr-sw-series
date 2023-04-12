@@ -1,0 +1,43 @@
+.brand-icon {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.brand-title
+{
+    font-family: 'URW Chancery L', 'cursive';
+    font-size: 2.5rem;
+    /* color: #006680; */
+    color:lavender;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.row-section {
+    margin-bottom:1rem;
+}
+
+.nav-item {
+    font-size: 1.5rem;
+}
+
+@media (max-width: 1400px) {
+    .container.main {
+        width: 100%;
+    }
+}
+
+/* 
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+); 
+*/

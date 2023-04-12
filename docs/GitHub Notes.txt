@@ -1,0 +1,9 @@
+GitHub Notes
+
+git pull origin master
+git checkout -b new_branch
+git merge master
+git status
+git add .
+git commit -m "my message"
+git push origin new_branch
