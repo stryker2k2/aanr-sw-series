@@ -7,13 +7,16 @@
 . venv/bin/activate
 
 # Performing Linux Update & Upgrade
+echo "[+] Updating and Upgrading Linux"
 sudo apt update -y
 sudo apt upgrade -y
 
 # Installing APT Dependencies
+echo "[+] Installing APT Dependencies"
 sudo apt install python3 
 sudo apt install grip
 sudo apt install mysql-server
 
 # Installing Python PIP Requirements
+echo "[+] Installing Python PIP Requirements"
 pip install -r support/requirements.txt

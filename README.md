@@ -18,7 +18,7 @@ A website for the AANR-SW 5K Racing Series
 - (pip) flask-ckeditor
 
 ### Old Setup
-- python3 -m venv virt
+- python3 -m venv venv
 - source venv/bin/activate
 - deactivate (optional)
 - pip install <dependencies>
