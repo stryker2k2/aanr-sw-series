@@ -35,14 +35,14 @@ mysql> GRANT ALL PRIVILEGES ON *.* TO 'db-admin'@'localhost';
 mysql> FLUSH PRIVILEGES;
 mysql> quit;
 (virt)$ sudo systemctl restart mysql
-(virt)$ python3 support/create_db.py
+(virt)$ python3 support/create_db.py --task create
 
 # Initialize MySQL Database for Flask usage
 (virt)$ pip install pymysql
 (virt)$ pip install cryptography
 (virt)$ python3
->>> from hello import app
->>> from hello import db
+>>> from app import app
+>>> from app import db
 >>> db.create_all()
 >>> quit()
 
@@ -56,6 +56,13 @@ mysql> SHOW TABLES;
 mysql> SELECT * FROM users;
 mysql> SELECT * FROM posts;
 mysql> quit;
+
+# Delete Records from Users (or Posts) Tables
+mysql> DELETE FROM users WHERE username = "jward";
+
+# Change User ID of User in `user` Table
+mysql> UPDATE users SET id = 1 WHERE username = "jward";
+mysql> SELECT id, username FROM users;
 
 # Migration (add new column to Database)
 (virt)$ pip install Flask-Migrate
