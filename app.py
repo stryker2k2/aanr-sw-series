@@ -137,7 +137,7 @@ def dashboard():
 @login_required
 def admin():
     id = current_user.id
-    if id == app.config['ADMIN_ID']:
+    if id == app.config['ADMIN_ID'] or current_user.is_admin:
         our_users = Users.query.order_by(Users.date_added)
         return render_template('admin.html', 
                                our_users = our_users)
@@ -230,7 +230,7 @@ def add_user():
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 @login_required
 def update(id):
-    if current_user.id == id or current_user.id == app.config['ADMIN_ID']:
+    if current_user.id == id or current_user.id == app.config['ADMIN_ID'] or current_user.is_admin:
         form = UserForm()
         name_to_update = Users.query.get_or_404(id)
         if request.method == 'POST':
@@ -266,7 +266,7 @@ def update(id):
 @app.route('/delete/<int:id>')
 @login_required
 def delete(id):
-    if current_user.id == id or current_user.id == app.config['ADMIN_ID']:
+    if current_user.id == id or current_user.id == app.config['ADMIN_ID'] or current_user.is_admin:
         user_to_delete = Users.query.get_or_404(id)
         name = None
         form = UserForm()
@@ -347,7 +347,7 @@ def edit_post(id):
         db.session.commit()
         flash("Post was updated successfully")
         return redirect(url_for('post', id=post.id))
-    if current_user.id == post.poster_id or current_user.id == app.config['ADMIN_ID']:
+    if current_user.id == post.poster_id or current_user.id == app.config['ADMIN_ID'] or current_user.is_admin:
         form.title.data = post.title
         # form.author.data = post.author
         form.slug.data = post.slug
@@ -388,7 +388,7 @@ def search():
 def delete_post(id):
     post_to_delete = Posts.query.get_or_404(id)
     # id = current_user.id
-    if current_user.id == post_to_delete.poster_id or current_user.id == app.config['ADMIN_ID']:
+    if current_user.id == post_to_delete.poster_id or current_user.id == app.config['ADMIN_ID'] or current_user.is_admin:
         try:
             db.session.delete(post_to_delete)
             db.session.commit()
@@ -447,7 +447,7 @@ class Users(db.Model, UserMixin):
     # User can have many posts - need database relationship
     posts = db.relationship('Posts', backref='poster')
     profile_pic = db.Column(db.String(120), nullable=True)
-    is_admin = db.Column(db.Boolean, nullable=False, default=0)
+    is_admin = db.Column(db.Integer, nullable=True, default=0)
 
     @property
     def password(self):

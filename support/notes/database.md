@@ -60,9 +60,12 @@ mysql> quit;
 # Delete Records from Users (or Posts) Tables
 mysql> DELETE FROM users WHERE username = "jward";
 
-# Change User ID of User in `user` Table
+# Change User ID of User in `users` Table
 mysql> UPDATE users SET id = 1 WHERE username = "jward";
 mysql> SELECT id, username FROM users;
+
+# Delete 'users' Table
+mysql> DELETE FROM users;
 
 # Migration (add new column to Database)
 (virt)$ pip install Flask-Migrate
