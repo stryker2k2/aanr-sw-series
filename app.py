@@ -182,6 +182,7 @@ def add_user():
                 email = form.email.data, 
                 fav_color = form.fav_color.data,
                 password_hash = hashed_pw)
+            print('[+] Adding User to Database')
             db.session.add(user)
             db.session.commit()
         name = form.name.data

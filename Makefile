@@ -1,5 +1,4 @@
-PYTHON := virt/bin/python3
+PYTHON := venv/bin/python3
 
 run:
-	. venv/bin/activate
-	flask run --debug
+	. venv/bin/activate && flask run --debug

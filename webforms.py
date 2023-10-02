@@ -17,7 +17,7 @@ class UserForm(FlaskForm):
     password_hash = PasswordField("Password", validators=[DataRequired(), EqualTo("password_hash2", message = "Passwords Must Match!")])
     password_hash2 = PasswordField("Confirm Password", validators=[DataRequired()])
     profile_pic = FileField("Profile Pic")
-    is_admin = SelectField(("Admin Status"), choices=[(0, "False"),(1, "True")], coerce=int)
+    is_admin = SelectField('Is Admin', choices=[(0, 'No'), (1, 'Yes')], default=0, coerce=int)
 
 class NamerForm(FlaskForm):
     name = StringField("What's your name?", validators=[DataRequired()])
