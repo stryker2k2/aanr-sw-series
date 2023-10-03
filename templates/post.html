@@ -19,9 +19,9 @@
         <div class="row no-gutters">
             <div class="col-md-2">
                 {% if post.poster.profile_pic %}
-                    <img src="{{ url_for('static', filename='images/' + post.poster.profile_pic )}}" width="150" align="left"/>
+                    <img src="{{ url_for('static', filename='images/profile_pics/' + post.poster.profile_pic )}}" width="150" align="left"/>
                 {% else %}
-                    <img src="{{ url_for('static', filename='images/default-user-profile-pic.png')}}" width="150" align="left"/>
+                    <img src="{{ url_for('static', filename='images/profile_pics/default-user-profile-pic.png')}}" width="150" align="left"/>
                 {% endif %}
             </div>
             <div class="col-md-10">
