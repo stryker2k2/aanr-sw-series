@@ -59,7 +59,8 @@ def set_global_html_variable_values():
 # Root Route
 @app.route('/')
 def index():
-    return redirect(url_for('posts'))
+    # return redirect(url_for('posts'))
+    return render_template('index.html')
 
 # Login Page Route
 @app.route('/login', methods=['GET', 'POST'])
