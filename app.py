@@ -32,6 +32,7 @@ app.config['SECRET_KEY'] = 'MySuperSecretKey'
 
 # Setup Folder for Uploading Images
 UPLOAD_FOLDER = './static/images/'
+# UPLOAD_FOLDER = '/var/www/aanr-sw-series/static/images/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.config['ADMIN_ID'] = 1
@@ -110,9 +111,15 @@ def dashboard():
 
             try:
                 db.session.commit()
-                saver.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
-                flash("User Updated Successfully")
-                return render_template('dashboard.html',
+                if saver:
+                    saver.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+                    flash("User Updated Successfully")
+                    return render_template('dashboard.html',
+                        form = form,
+                        name_to_update = name_to_update)
+                else:
+                    flash("Request File Error!")
+                    return render_template('dashboard.html',
                     form = form,
                     name_to_update = name_to_update)
             except:
