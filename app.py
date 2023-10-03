@@ -31,8 +31,12 @@ app.app_context().push()
 app.config['SECRET_KEY'] = 'MySuperSecretKey'
 
 # Setup Folder for Uploading Images
-UPLOAD_FOLDER = './static/images/'
-# UPLOAD_FOLDER = '/var/www/aanr-sw-series/static/images/'
+if app.debug == True:
+    print("[+] Debug Mode")
+    UPLOAD_FOLDER = './static/images/'
+else:
+    UPLOAD_FOLDER = '/var/www/aanr-sw-series/static/images/'
+    
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.config['ADMIN_ID'] = 1

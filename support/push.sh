@@ -15,6 +15,10 @@ SERVER='66.228.48.250'
 echo -e "${GREEN}[+] Ensuring Server is Online${ENDCOLOR}"
 ping ${SERVER} -c 1
 
+# Making a Backup of Images Folder
+echo -e "${GREEN}[+] Making a Backup of Images Folder${ENDCOLOR}"
+scp -rp root@${SERVER}:/var/www/aanr-sw-series/static/images ./static/
+
 # Launch Server-side Script to Remove ALL Website Files
 echo -e "${GREEN}[+] Launching Server-side Script to Remove ALL Website Files${ENDCOLOR}"
 ssh root@${SERVER} 'bash -c /root/clean_server.sh'
