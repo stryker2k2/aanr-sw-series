@@ -29,7 +29,8 @@ A website for the AANR-SW 5K Racing Series
 - flask run
 
 ### New Setup
-- python3 -m venv virt
+- apt install python3.10-venv
+- python3 -m venv venv
 - source venv/bin/activate
 - ./support/install_requirements.txt
 - *setup Database with 'support/notes/database.md'*
