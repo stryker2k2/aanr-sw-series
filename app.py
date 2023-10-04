@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, request, redirect, url_for
+from flask import Flask, render_template, flash, request, redirect, url_for, session
 from wtforms.widgets import TextArea
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -27,8 +27,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://db-admin:password@local
 app.app_context().push()
 
 # Create a CSRF Secret Key
-# app.config['SECRET_KEY'] = str(uuid.uuid1())
-app.config['SECRET_KEY'] = 'MySuperSecretKey'
+app.config['SECRET_KEY'] = str(uuid.uuid1())
+# app.config['SESSION_COOKIE_NAME'] = str(uuid.uuid1())
 
 # Setup Folder for Uploading Images
 if app.debug == True:
@@ -77,7 +77,7 @@ def login():
             # Check Password Hash
             if check_password_hash(user.password_hash, form.password.data):
                 login_user(user)
-                flash('Login Successful')
+                flash('Login Successful')                
                 return redirect(url_for('dashboard'))
             else:
                 flash('Wrong Password')
@@ -197,6 +197,10 @@ def add_user():
             print('[+] Adding User to Database')
             db.session.add(user)
             db.session.commit()
+            flash('User Added Successfully!')
+        else:
+            print('[!] Error adding User to Database')
+            flash('Failed to Add User!')
         name = form.name.data
         email = form.email.data
         form.name.data = ''
@@ -204,7 +208,6 @@ def add_user():
         form.email.data = ''
         form.fav_color.data = ''
         form.password_hash.data = ''
-        flash('User Added Successfully!')
     this_user = Users.query.filter_by(email=email).first()
     return render_template('add_user.html',
         form = form, 
