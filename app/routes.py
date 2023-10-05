@@ -1,64 +1,12 @@
-from flask import Flask, render_template, flash, request, redirect, url_for, session
-from wtforms.widgets import TextArea
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from datetime import datetime, date
+from flask import render_template, flash, request, redirect, url_for
+from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-from webforms import LoginForm, PostForm, UserForm, PasswordForm, NamerForm, SearchForm
-from flask_ckeditor import CKEditor
-
+from app import app, db
+from app.models import Users, Posts
+from app.webforms import LoginForm, PostForm, UserForm, PasswordForm, NamerForm, SearchForm
 import uuid as uuid
 import os
-
-# Create a Flask Instance
-app = Flask(__name__)
-
-# Add CKEditor
-ckeditor = CKEditor(app)
-
-# SQLite3 Database
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-# app.app_context().push()
-
-# MySQL Database (mysql://<username>:<password>@<serverip>/<db_name>)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://db-admin:password@localhost/our_users'
-app.app_context().push()
-
-# Create a CSRF Secret Key
-app.config['SECRET_KEY'] = str(uuid.uuid1())
-# app.config['SESSION_COOKIE_NAME'] = str(uuid.uuid1())
-
-# Setup Folder for Uploading Images
-if app.debug == True:
-    print("[+] Debug Mode")
-    UPLOAD_FOLDER = './static/images/profile_pics/'
-else:
-    UPLOAD_FOLDER = '/var/www/aanr-sw-series/static/images/profile_pics/'
-
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-app.config['ADMIN_ID'] = 1
-
-# Initialize & Migrate Database
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
-# Flask Login Setup
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
-
-@login_manager.user_loader
-def load_user(user_id):
-    return Users.query.get(int(user_id))
-
-@app.context_processor
-def set_global_html_variable_values():
-    admin_id = app.config['ADMIN_ID']
-    template_config = {'admin_id': admin_id}
-    return template_config
 
 ## Routes ##
 # Root Route
@@ -435,48 +383,3 @@ def page_not_found(e):
 @app.errorhandler(500)
 def page_not_found(e):
     return render_template('500.html'), 500
-
-
-## Database Models ##
-# Blog Post Model
-class Posts(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255))
-    content = db.Column(db.Text)
-    # author = db.Column(db.String(255))
-    date_posted = db.Column(db.DateTime, default=datetime.utcnow)
-    slug = db.Column(db.String(255))
-    # Foreign Key to link Users (primary key: user,id)
-    poster_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-
-# User Model
-class Users(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False, unique=True)
-    name = db.Column(db.String(200), nullable=False)
-    email = db.Column(db.String(120), nullable=False, unique=True)
-    fav_color = db.Column(db.String(120))
-    about_author = db.Column(db.Text(500), nullable=True)
-    date_added = db.Column(db.DateTime, default=datetime.utcnow)
-    password_hash = db.Column(db.String(128))
-    # User can have many posts - need database relationship
-    posts = db.relationship('Posts', backref='poster')
-    profile_pic = db.Column(db.String(120), nullable=True)
-    is_admin = db.Column(db.Integer, nullable=True, default=0)
-
-    @property
-    def password(self):
-        raise AttributeError('password is not a readable attribute')
-    
-    @password.setter
-    def password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def verify_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
-
-    # Create a String
-    def __repr__(self):
-        return '<Name %r>' % self.name

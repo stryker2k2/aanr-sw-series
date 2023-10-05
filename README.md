@@ -49,8 +49,13 @@ A website for the AANR-SW 5K Racing Series
 - flask shell
 - grip (view README.md locally)
 
+### Global Environment Variables
+- $ nano ~/.profile
+    - export SQLALCHEMY_DATABASE_URI='mysql+pymysql://db-admin:password@localhost/our_users'
+    - export SECRET_KEY='9fa87cf0-62f2-11ee-b650-9dcbc88ae8b7'
+
 ### TODO
-- Deploy to Production
-    - https://flask.palletsprojects.com/en/2.3.x/tutorial/deploy/
-- Deploy to Heroku
-    - https://youtu.be/SiCAIRc0pEI
+- Password Reset Request via Email
+    - https://youtu.be/vutyTx7IaAI
+- Flask Sessions
+    - testdriven.io/blog/flask-sessions

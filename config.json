@@ -1,0 +1,6 @@
+{
+    "SQLALCHEMY_DATABASE_URI": "mysql+pymysql://db-admin:password@localhost/our_users",
+    "SECRET_KEY":"9fa87cf0-62f2-11ee-b650-9dcbc88ae8b7",
+    "UPLOAD_FOLDER": "./static/images/profile_pics/",
+    "ADMIN_ID": 1
+}
