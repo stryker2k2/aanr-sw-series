@@ -1,21 +1,5 @@
 # Databases
 
-## sqlite3
-
-hello.py
-```python
-app.app_context().push()
-```
-
-terminal
-```bash
-(venv)$ python3
->>> from app import app
->>> from app import db
->>> db.create_all()
-```
-
-
 ## mysql
 app.py
 ```python
@@ -25,7 +9,7 @@ app.app_context().push()
 terminal
 ```bash
 # Install MySQL Server
-(virt)$ sudo apt-get install mysql-server
+(virt)$ sudo apt install mysql-server
 (virt)$ systemctl status mysql
 
 # Create MySQL User & Password

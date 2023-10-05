@@ -3,32 +3,13 @@ A website for the AANR-SW 5K Racing Series
 
 ### APT Dependencies
 - (apt) python3 
-- (apt) grip
-- (apt) mysql-server
+- (apt) python3.10-venv
+- see ./support/install_requirements.sh
 
 ### PIP Dependencies
-- (pip) flask
-- (pip) flask-wtf
-- (pip) flask-sqlalchemy
-- (pip) mysql-connector-python
-- (pip) pymysql
-- (pip) cryptography
-- (pip) Flask-Migrate
-- (pip) flask_login
-- (pip) flask-ckeditor
+- see ./support/requirements.txt
 
-### Old Setup
-- python3 -m venv venv
-- source venv/bin/activate
-- deactivate (optional)
-- pip install <dependencies>
-- pip freeze (to view install python modules)
-- export FLASK_DEBUG=True
-- export FLASK_APP=hello.py
-- *setup Database with 'notes/database.md'*
-- flask run
-
-### New Setup
+### Setup
 - apt install python3.10-venv
 - python3 -m venv venv
 - source venv/bin/activate
@@ -36,23 +17,12 @@ A website for the AANR-SW 5K Racing Series
 - *setup Database with 'support/notes/database.md'*
 - make run
 
-### Old Daily Use
-- source venv/bin/activate
-- flask run --debug
-
-### New Daily Use
+### Daily Use
 - make run
 
 ### Other Commands
-- echo $FLASK_ENV
-- unset FLASK_ENV
 - flask shell
 - grip (view README.md locally)
-
-### Global Environment Variables
-- $ nano ~/.profile
-    - export SQLALCHEMY_DATABASE_URI='mysql+pymysql://db-admin:password@localhost/our_users'
-    - export SECRET_KEY='9fa87cf0-62f2-11ee-b650-9dcbc88ae8b7'
 
 ### TODO
 - Password Reset Request via Email
