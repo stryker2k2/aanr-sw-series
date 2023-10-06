@@ -9,7 +9,7 @@
     </div>
 {% endfor %}
 
-{% if current_user.is_authenticated %}
+{% if session["id"] == admin_id or session["is_admin"] %}
 
 <h2>Add Blog Post</h2>
     <br/>

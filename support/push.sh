@@ -22,8 +22,8 @@ then
 	ping ${SERVER} -c 1
 
 	# Making a Backup of Images Folder
-	echo -e "${GREEN}\n[+] Making a Backup of Images Folder${ENDCOLOR}"
-	scp -rp root@${SERVER}:${FLASK_ROOT}/aanr-sw-series/app/static/images ./app/static/
+	# echo -e "${GREEN}\n[+] Making a Backup of Images Folder${ENDCOLOR}"
+	# scp -rp root@${SERVER}:${FLASK_ROOT}/aanr-sw-series/app/static/images ./app/static/
 
 	# Changing Permissions of all Images to Public (chmod 777)
 	echo -e "${GREEN}\n[+] Changing Permissions of all Images to Public (chmod 777)${ENDCOLOR}"

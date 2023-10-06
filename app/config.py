@@ -21,6 +21,7 @@ class Config:
     SECRET_KEY = config.get('SECRET_KEY')
     UPLOAD_FOLDER = config.get(get_folder())
     ADMIN_ID = config.get('ADMIN_ID')
+    # SESSION_TYPE = config.get('SESSION_TYPE')
 
     print("\n[+] UPLOAD_FOLDER: " + str(UPLOAD_FOLDER))
 

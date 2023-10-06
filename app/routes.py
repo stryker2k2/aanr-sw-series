@@ -1,10 +1,11 @@
-from flask import render_template, flash, request, redirect, url_for
-from flask_login import login_user, login_required, logout_user, current_user
+from flask import render_template, flash, request, redirect, url_for, session
+# from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from app import app, db
 from app.models import Users, Posts
 from app.webforms import LoginForm, PostForm, UserForm, PasswordForm, NamerForm, SearchForm
+from functools import wraps
 import uuid as uuid
 import os
 
@@ -24,7 +25,11 @@ def login():
         if user:
             # Check Password Hash
             if check_password_hash(user.password_hash, form.password.data):
-                login_user(user)
+                # login_user(user)
+
+                session["id"] = user.id
+                session["is_admin"] = user.is_admin
+
                 flash('Login Successful')                
                 return redirect(url_for('dashboard'))
             else:
@@ -33,19 +38,30 @@ def login():
             flash('Invalid Username')
     return render_template('login.html', form = form)
 
+def session_required(func):
+    @wraps(func)
+    def decorated(*args, **kwargs):
+        if "id" not in session:
+            return redirect('/login')
+        else:
+            return func(*args, **kwargs)
+    return decorated
+
 # Dashboard Page Route
 @app.route('/dashboard', methods=['GET', 'POST'])
-@login_required
+# @login_required
+@session_required
 def dashboard():
     form = UserForm()
-    id = current_user.id
+    # id = session["id"]
+    id = session["id"]
     name_to_update = Users.query.get_or_404(id)
     if request.method == 'POST':
         name_to_update.name = request.form['name']
         name_to_update.email = request.form['email']
         name_to_update.fav_color = request.form['fav_color']
         name_to_update.username = request.form['username']
-        name_to_update.about_author = request.form['about_author']        
+        name_to_update.about_author = request.form['about_author']
 
         # Check for pre-existing profile pic
         if request.files['profile_pic']:
@@ -64,7 +80,6 @@ def dashboard():
             try:
                 db.session.commit()
                 if saver:
-                    print("\n[+] saver folder is: " + str(app.config['UPLOAD_FOLDER']))
                     saver.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
                     flash("User Updated Successfully")
                     return render_template('dashboard.html',
@@ -95,10 +110,11 @@ def dashboard():
 
 # Admin Route
 @app.route('/admin')
-@login_required
+# @login_required
+@session_required
 def admin():
-    id = current_user.id
-    if id == app.config['ADMIN_ID'] or current_user.is_admin:
+    id = session["id"]
+    if id == app.config['ADMIN_ID'] or session["is_admin"]:
         our_users = Users.query.order_by(Users.date_added)
         return render_template('admin.html', 
                                our_users = our_users)
@@ -108,9 +124,14 @@ def admin():
 
 # Logout Page Route
 @app.route('/logout', methods=['GET', 'POST'])
-@login_required
+# @login_required
+@session_required
 def logout():
-    logout_user()
+    # logout_user()
+    # session.pop('id', None)
+    # session.pop('is_admin', None)
+    session.clear()
+
     flash('Succesfully Logged Out')
     return redirect(url_for('login'))
 
@@ -193,9 +214,10 @@ def add_user():
 
 # Update Database Record
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
-@login_required
+# @login_required
+@session_required
 def update(id):
-    if current_user.id == id or current_user.id == app.config['ADMIN_ID'] or current_user.is_admin:
+    if session["id"] == id or session["id"] == app.config['ADMIN_ID'] or session["is_admin"]:
         form = UserForm()
         name_to_update = Users.query.get_or_404(id)
         if request.method == 'POST':
@@ -229,9 +251,10 @@ def update(id):
 
 # Delete Record from Database
 @app.route('/delete/<int:id>')
-@login_required
+# @login_required
+@session_required
 def delete(id):
-    if current_user.id == id or current_user.id == app.config['ADMIN_ID'] or current_user.is_admin:
+    if session["id"] == id or session["id"] == app.config['ADMIN_ID'] or session["is_admin"]:
         user_to_delete = Users.query.get_or_404(id)
         name = None
         form = UserForm()
@@ -266,11 +289,12 @@ def get_current_date():
 
 # Post Page
 @app.route('/add-post', methods=['GET', 'POST'])
-@login_required
+# @login_required
+@session_required
 def add_post():
     form = PostForm()
     if form.validate_on_submit():
-        poster = current_user.id
+        poster = session["id"]
         post = Posts(title=form.title.data, 
             content=form.content.data,
             poster_id=poster,
@@ -298,7 +322,8 @@ def post(id):
 
 # Edit Post
 @app.route('/posts/edit/<int:id>', methods=['GET', 'POST'])
-@login_required
+# @login_required
+@session_required
 def edit_post(id):
     post = Posts.query.get_or_404(id)
     form = PostForm()
@@ -312,7 +337,7 @@ def edit_post(id):
         db.session.commit()
         flash("Post was updated successfully")
         return redirect(url_for('post', id=post.id))
-    if current_user.id == post.poster_id or current_user.id == app.config['ADMIN_ID'] or current_user.is_admin:
+    if session["id"] == post.poster_id or session["id"] == app.config['ADMIN_ID'] or session["is_admin"]:
         form.title.data = post.title
         # form.author.data = post.author
         form.slug.data = post.slug
@@ -349,11 +374,12 @@ def search():
 
 # Delete Post
 @app.route('/posts/delete/<int:id>')
-@login_required
+# @login_required
+@session_required
 def delete_post(id):
     post_to_delete = Posts.query.get_or_404(id)
-    # id = current_user.id
-    if current_user.id == post_to_delete.poster_id or current_user.id == app.config['ADMIN_ID'] or current_user.is_admin:
+    # id = session["id"]
+    if session["id"] == post_to_delete.poster_id or session["id"] == app.config['ADMIN_ID'] or session["is_admin"]:
         try:
             db.session.delete(post_to_delete)
             db.session.commit()

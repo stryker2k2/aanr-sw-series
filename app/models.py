@@ -27,7 +27,8 @@ class Posts(db.Model):
 
 
 # User Model
-class Users(db.Model, UserMixin):
+# class Users(db.Model, UserMixin):
+class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     name = db.Column(db.String(200), nullable=False)

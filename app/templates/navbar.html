@@ -2,8 +2,8 @@
     <div class="container-fluid">
         <!-- <a class="navbar-brand" href="{{ url_for('index')  }}">AANR-SW Racing Series</a> -->
         <a class="navbar-brand" href="{{ url_for('index')  }}">
-            <!-- <img class="d-inline-block align-text-top" src="{{ url_for('static', filename='images/AANR-logo.png')}}" alt="AANR Logo" width="100" heigh="100"> -->
-            <h5>MySite</h5>
+            <img class="d-inline-block align-text-top" src="{{ url_for('static', filename='images/AANR-logo.png')}}" alt="AANR Logo" width="100" heigh="100">
+            <!-- <h5>MySite</h5> -->
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
@@ -17,14 +17,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('posts')  }}">Posts</a>
             </li>                      
-            {% if current_user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('add_post')  }}">Add Blog Post</a>
-                </li>
+            {% if session["id"] %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('dashboard')  }}">Dashboard</a>
                 </li>
-                {% if current_user.id == admin_id or current_user.is_admin %}
+                {% if session["id"] == admin_id or session["is_admin"] %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('add_post')  }}">Add Blog Post</a>
+                    </li>                    
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('admin')  }}">Admin</a>
                     </li>

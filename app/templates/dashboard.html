@@ -12,28 +12,28 @@
 
 <div class="card">
     <div class="card-header">
-        <strong>{{ current_user.name }}</strong><br/>
+        <strong>{{ name_to_update.name }}</strong><br/>
     </div>
     <div class="card-body">
         <p class="card-text">
             <div class="container">
                 <div class="row">
                     <div class="col-8">
-                        <strong>Name</strong> {{ current_user.name }}<br/>
-                        <strong>Username: </strong> {{ current_user.username }}<br/>
-                        <strong>User Id:</strong> {{ current_user.id }}<br/>
-                        <strong>Email: </strong> {{ current_user.email }}<br/>
-                        <strong>Favorite Color: </strong> {{ current_user.fav_color }}<br/>
-                        <strong>About Author: </strong> {{ current_user.about_author }}<br/>
-                        <strong>Profile Pic: </strong> {{ current_user.profile_pic }}<br/>
-                        <strong>Date Joined: </strong> {{ current_user.date_added }}<br/></p>
+                        <strong>Name</strong> {{ name_to_update.name }}<br/>
+                        <strong>Username: </strong> {{ name_to_update.username }}<br/>
+                        <strong>User Id:</strong> {{ name_to_update.id }}<br/>
+                        <strong>Email: </strong> {{ name_to_update.email }}<br/>
+                        <strong>Favorite Color: </strong> {{ name_to_update.fav_color }}<br/>
+                        <strong>About Author: </strong> {{ name_to_update.about_author }}<br/>
+                        <strong>Profile Pic: </strong> {{ name_to_update.profile_pic }}<br/>
+                        <strong>Date Joined: </strong> {{ name_to_update.date_added }}<br/></p>
                         <a href="{{ url_for('logout') }}" class="btn btn-secondary btn-sm">Logout</a>
-                        <a href="{{ url_for('update', id=current_user.id) }}" class="btn btn-secondary btn-sm">Update</a>
-                        <a href="{{ url_for('delete', id=current_user.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="{{ url_for('update', id=session['id']) }}" class="btn btn-secondary btn-sm">Update</a>
+                        <a href="{{ url_for('delete', id=session['id']) }}" class="btn btn-danger btn-sm">Delete</a>
                     </div>
                     <div class="col-4">
-                        {% if current_user.profile_pic %}
-                            <img src="{{ url_for('static', filename='images/profile_pics/' + current_user.profile_pic )}}" width="200" align="right"/>
+                        {% if name_to_update.profile_pic %}
+                            <img src="{{ url_for('static', filename='images/profile_pics/' + name_to_update.profile_pic )}}" width="200" align="right"/>
                         {% else %}
                             <img src="{{ url_for('static', filename='images/profile_pics/default-user-profile-pic.png')}}" width="200" align="right"/>
                         {% endif %}
