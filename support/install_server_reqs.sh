@@ -8,10 +8,10 @@ GREEN="\e[32m"
 ENDCOLOR="\e[0m"
 
 # Using 'install_requirements' Script to install Common Requirements
-echo -e "${GREEN}[+] Installing Requirements${ENDCOLOR}"
+echo -e "${GREEN}\n[+] Installing Requirements${ENDCOLOR}"
 sudo install_requirements.sh
 
 # Installing APT Dependencies
-echo -e "${GREEN}[+] Installing Server Specific Requirements${ENDCOLOR}"
+echo -e "${GREEN}\n[+] Installing Server Specific Requirements${ENDCOLOR}"
 sudo apt install apache2 -y
 sudo apt install libapache2-mod-wsgi-py3 -y

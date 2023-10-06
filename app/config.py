@@ -22,7 +22,7 @@ class Config:
     UPLOAD_FOLDER = config.get(get_folder())
     ADMIN_ID = config.get('ADMIN_ID')
 
-    print("[+] UPLOAD_FOLDER: " + str(UPLOAD_FOLDER))
+    print("\n[+] UPLOAD_FOLDER: " + str(UPLOAD_FOLDER))
 
 ###
 # SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://db-admin:password@localhost/our_users'

@@ -19,12 +19,12 @@ argParser.add_argument('-t', '--task', type=str, help='Task to be performed (ex:
 args = argParser.parse_args()
 
 if args.task and 'create' in args.task:
-    print('[+] Creating Database')
+    print('\n[+] Creating Database')
     my_cursor.execute("CREATE DATABASE our_users")
     my_cursor.execute("SHOW DATABASES")
 
 else:
-    print('[+] Showing Databases')
+    print('\n[+] Showing Databases')
     my_cursor.execute("SHOW DATABASES")
 
 for db in my_cursor:

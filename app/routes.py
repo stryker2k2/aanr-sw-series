@@ -64,7 +64,7 @@ def dashboard():
             try:
                 db.session.commit()
                 if saver:
-                    print("[+] saver folder is: " + str(app.config['UPLOAD_FOLDER']))
+                    print("\n[+] saver folder is: " + str(app.config['UPLOAD_FOLDER']))
                     saver.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
                     flash("User Updated Successfully")
                     return render_template('dashboard.html',
@@ -143,7 +143,7 @@ def add_user():
                 email = form.email.data, 
                 fav_color = form.fav_color.data,
                 password_hash = hashed_pw)
-            print('[+] Adding User to Database')
+            print('\n[+] Adding User to Database')
             db.session.add(user)
             db.session.commit()
             flash('User Added Successfully!')
