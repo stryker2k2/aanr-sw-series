@@ -13,12 +13,16 @@ A website for the AANR-SW 5K Racing Series
 - apt install python3.10-venv
 - python3 -m venv venv
 - source venv/bin/activate
-- ./support/install_requirements.txt
+- ./support/install_requirements.sh
 - *setup Database with 'support/notes/database.md'*
 - make run
 
 ### Daily Use
 - make run
+
+### SSH into Production Server
+- ping [production-server-ip]
+- ssh root@[production-server-ip]
 
 ### Other Commands
 - flask shell
@@ -30,3 +34,5 @@ A website for the AANR-SW 5K Racing Series
 - Flask Sessions
     - testdriven.io/blog/flask-sessions
 - Disable SSH Password Login on Linode Server
+- Fix error when trying to login on remote website
+- Fix error with user image when you reload website

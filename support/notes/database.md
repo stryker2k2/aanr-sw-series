@@ -37,7 +37,9 @@ mysql> quit;
 mysql> SHOW DATABASES;
 mysql> USE our_users;
 mysql> SHOW TABLES;
+mysql> EXPLAIN users;
 mysql> SELECT * FROM users;
+mysql> EXPLAIN posts;
 mysql> SELECT * FROM posts;
 mysql> quit;
 
